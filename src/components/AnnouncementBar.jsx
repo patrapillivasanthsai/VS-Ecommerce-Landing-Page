@@ -3,7 +3,7 @@ import { ChevronDown, X } from 'lucide-react';
 
 export default function AnnouncementBar() {
   const [isVisible, setIsVisible] = useState(true);
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('INR');
   const [currencyOpen, setCurrencyOpen] = useState(false);
 
   if (!isVisible) return null;
@@ -14,9 +14,9 @@ export default function AnnouncementBar() {
         
         {/* Left side detail - Desktop only */}
         <div className="hidden md:flex items-center space-x-4 text-neutral-400">
-          <span>Complimentary Express Shipping over $150</span>
+          <span>Complimentary Express Shipping over ₹2,999</span>
           <span className="w-1 h-1 rounded-full bg-neutral-600"></span>
-          <span>Duty-Free Global Delivery</span>
+          <span>All Inclusive Shipping Across India</span>
         </div>
 
         {/* Center message */}
@@ -39,13 +39,13 @@ export default function AnnouncementBar() {
               onClick={() => setCurrencyOpen(!currencyOpen)}
               className="flex items-center space-x-1 hover:text-white transition-colors py-0.5 focus:outline-none"
             >
-              <span>{currency} ($)</span>
+              <span>{currency} (₹)</span>
               <ChevronDown className="w-3 h-3" />
             </button>
 
             {currencyOpen && (
               <div className="absolute right-0 mt-1 w-24 bg-neutral-900 border border-neutral-800 rounded shadow-xl py-1 z-50 text-neutral-300 text-xs">
-                {['USD ($)', 'EUR (€)', 'GBP (£)', 'CAD ($)'].map((curr) => (
+                {['INR (₹)', 'USD ($)', 'EUR (€)', 'GBP (£)'].map((curr) => (
                   <button
                     key={curr}
                     onClick={() => {

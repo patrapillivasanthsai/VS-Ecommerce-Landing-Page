@@ -47,8 +47,8 @@ Make sure you have Node.js (v18+) and npm installed.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/vs-ecommerce.git
-   cd vs-ecommerce
+   git clone https://github.com/patrapillivasanthsai/VS-Ecommerce-Landing-Page.git
+   cd VS-Ecommerce-Landing-Page
    ```
 
 2. Install dependencies:
@@ -94,7 +94,7 @@ src/
 
 ## Live Demo
 
-[https://YOUR-VERCEL-URL](https://your-vercel-url/)
+[https://vs-ecommerce-landing-page.vercel.app/](https://vs-ecommerce-landing-page.vercel.app/)
 
 ## Design Focus
 

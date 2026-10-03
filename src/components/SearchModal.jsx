@@ -111,7 +111,7 @@ export default function SearchModal({
                       <h4 className="text-sm font-semibold text-neutral-900">{product.name}</h4>
                       <p className="text-xs text-neutral-500 font-medium">{product.category}</p>
                     </div>
-                    <span className="text-sm font-bold text-neutral-900">${product.price}</span>
+                    <span className="text-sm font-bold text-neutral-900">₹{product.price.toLocaleString('en-IN')}</span>
                   </div>
                 ))}
               </div>

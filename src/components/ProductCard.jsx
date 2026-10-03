@@ -95,7 +95,7 @@ export default function ProductCard({
             ) : (
               <>
                 <Plus className="w-3.5 h-3.5" />
-                <span>Add to Bag — ${product.price}</span>
+                <span>Add to Bag — ₹{product.price.toLocaleString('en-IN')}</span>
               </>
             )}
           </button>
@@ -117,7 +117,7 @@ export default function ProductCard({
         </div>
         <div className="text-right shrink-0 pl-2">
           <span className="text-sm font-semibold text-neutral-900">
-            ${product.price}
+            ₹{product.price.toLocaleString('en-IN')}
           </span>
         </div>
       </div>

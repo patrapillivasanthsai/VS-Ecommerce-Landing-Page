@@ -104,7 +104,7 @@ export default function QuickViewModal({
               </h2>
 
               <div className="text-2xl font-semibold text-neutral-900">
-                ${product.price}
+                ₹{product.price.toLocaleString('en-IN')}
               </div>
 
               <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed pt-1">
@@ -177,7 +177,7 @@ export default function QuickViewModal({
                     <span>Added to Bag</span>
                   </>
                 ) : (
-                  <span>Add to Bag — ${(product.price * quantity).toFixed(2)}</span>
+                  <span>Add to Bag — ₹{(product.price * quantity).toLocaleString('en-IN')}</span>
                 )}
               </button>
 

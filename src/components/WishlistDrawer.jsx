@@ -67,7 +67,7 @@ export default function WishlistDrawer({
                     <div>
                       <div className="flex justify-between items-start">
                         <h4 className="text-sm font-semibold text-neutral-900">{product.name}</h4>
-                        <span className="text-sm font-bold text-neutral-900 ml-2">${product.price}</span>
+                        <span className="text-sm font-bold text-neutral-900 ml-2">₹{product.price.toLocaleString('en-IN')}</span>
                       </div>
                       <p className="text-xs text-neutral-500 font-medium mt-0.5">{product.category}</p>
                     </div>

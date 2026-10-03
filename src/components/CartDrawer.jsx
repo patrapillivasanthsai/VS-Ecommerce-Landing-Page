@@ -12,9 +12,10 @@ export default function CartDrawer({
   if (!isOpen) return null;
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const freeShippingThreshold = 150;
+  const freeShippingThreshold = 2999;
   const shippingProgress = Math.min((subtotal / freeShippingThreshold) * 100, 100);
   const amountNeeded = freeShippingThreshold - subtotal;
+  const shippingCost = subtotal >= freeShippingThreshold ? 0 : 199;
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
@@ -48,7 +49,7 @@ export default function CartDrawer({
             <div className="flex justify-between font-medium text-neutral-800 mb-1.5">
               <span>
                 {amountNeeded > 0 
-                  ? `Add $${amountNeeded.toFixed(0)} more for Free Express Shipping` 
+                  ? `Add ₹${amountNeeded.toLocaleString('en-IN')} more for Free Express Shipping` 
                   : '🎉 You have unlocked Free Express Shipping!'}
               </span>
               <span>{Math.round(shippingProgress)}%</span>
@@ -91,7 +92,7 @@ export default function CartDrawer({
                     <div>
                       <div className="flex justify-between items-start">
                         <h4 className="text-sm font-semibold text-neutral-900 line-clamp-1">{item.name}</h4>
-                        <span className="text-sm font-bold text-neutral-900 ml-2">${item.price * item.quantity}</span>
+                        <span className="text-sm font-bold text-neutral-900 ml-2">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                       </div>
                       <p className="text-xs text-neutral-500 font-medium mt-0.5">{item.category}</p>
                     </div>
@@ -135,15 +136,15 @@ export default function CartDrawer({
               <div className="space-y-2 text-xs text-neutral-600">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span className="font-semibold text-neutral-900">${subtotal.toFixed(2)}</span>
+                  <span className="font-semibold text-neutral-900">₹{subtotal.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Estimated Shipping</span>
-                  <span>{subtotal >= freeShippingThreshold ? 'FREE' : '$15.00'}</span>
+                  <span>{shippingCost === 0 ? 'FREE' : '₹199'}</span>
                 </div>
                 <div className="flex justify-between text-sm font-bold text-neutral-900 pt-2 border-t border-neutral-200">
                   <span>Total</span>
-                  <span>${(subtotal + (subtotal >= freeShippingThreshold ? 0 : 15)).toFixed(2)}</span>
+                  <span>₹{(subtotal + shippingCost).toLocaleString('en-IN')}</span>
                 </div>
               </div>
 

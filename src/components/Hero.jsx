@@ -85,7 +85,7 @@ export default function Hero({ onExploreClick }) {
                     <p className="text-xs font-semibold text-neutral-900">Monolith Ceramic Vessel</p>
                   </div>
                   <span className="text-xs font-bold text-neutral-900 px-3 py-1 bg-neutral-900 text-white rounded-full">
-                    $68
+                    ₹1,299
                   </span>
                 </div>
               </div>
