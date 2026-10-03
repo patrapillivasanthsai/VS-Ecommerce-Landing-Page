@@ -15,16 +15,49 @@ import Toast from './components/Toast';
 import { PRODUCTS } from './data/products';
 
 export default function App() {
-  const [cartItems, setCartItems] = useState([
-    { ...PRODUCTS[0], quantity: 1 }
-  ]);
-  const [wishlistIds, setWishlistIds] = useState(['vs-03']);
+  // Shopping bag cart items state with safe localStorage persistence
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const saved = localStorage.getItem('vs_cart');
+      return saved ? JSON.parse(saved) : [{ ...PRODUCTS[0], quantity: 1 }];
+    } catch {
+      return [{ ...PRODUCTS[0], quantity: 1 }];
+    }
+  });
+
+  // Wishlist product IDs state - initialized to empty [] for new visitors
+  const [wishlistIds, setWishlistIds] = useState(() => {
+    try {
+      const saved = localStorage.getItem('vs_wishlist');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
   
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [toast, setToast] = useState(null);
+
+  // Sync cart items to localStorage silently without triggering toasts
+  useEffect(() => {
+    try {
+      localStorage.setItem('vs_cart', JSON.stringify(cartItems));
+    } catch {
+      // Ignore storage write errors
+    }
+  }, [cartItems]);
+
+  // Sync wishlist IDs to localStorage silently without triggering toasts
+  useEffect(() => {
+    try {
+      localStorage.setItem('vs_wishlist', JSON.stringify(wishlistIds));
+    } catch {
+      // Ignore storage write errors
+    }
+  }, [wishlistIds]);
 
   // Auto hide toast after 3 seconds
   useEffect(() => {
@@ -53,6 +86,7 @@ export default function App() {
   };
 
   const handleAddToCart = (product, quantity = 1) => {
+    if (!product || !product.id) return;
     setCartItems(prevItems => {
       const existing = prevItems.find(item => item.id === product.id);
       if (existing) {
@@ -68,16 +102,15 @@ export default function App() {
   };
 
   const handleToggleWishlist = (product) => {
-    setWishlistIds(prev => {
-      const exists = prev.includes(product.id);
-      if (exists) {
-        showToast(`Removed "${product.name}" from wishlist.`, 'info');
-        return prev.filter(id => id !== product.id);
-      } else {
-        showToast(`Saved "${product.name}" to wishlist.`, 'wishlist');
-        return [...prev, product.id];
-      }
-    });
+    if (!product || !product.id) return;
+    const isSaved = wishlistIds.includes(product.id);
+    if (isSaved) {
+      setWishlistIds(prev => prev.filter(id => id !== product.id));
+      showToast(`Removed "${product.name}" from wishlist.`, 'info');
+    } else {
+      setWishlistIds(prev => [...prev, product.id]);
+      showToast(`Saved "${product.name}" to wishlist.`, 'wishlist');
+    }
   };
 
   const handleUpdateCartQuantity = (id, newQuantity) => {
@@ -94,6 +127,7 @@ export default function App() {
   };
 
   const handleMoveWishlistToCart = (product) => {
+    if (!product || !product.id) return;
     handleAddToCart(product, 1);
     setWishlistIds(prev => prev.filter(id => id !== product.id));
   };
