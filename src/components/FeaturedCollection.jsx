@@ -1,21 +1,32 @@
 import React, { useState } from 'react';
 import ProductCard from './ProductCard';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, X } from 'lucide-react';
+import { COLLECTIONS } from '../data/products';
 
 export default function FeaturedCollection({ 
   products, 
   wishlistIds, 
   onToggleWishlist, 
   onAddToCart, 
-  onQuickView 
+  onQuickView,
+  selectedCollectionId,
+  onClearCollection
 }) {
   const [activeCategory, setActiveCategory] = useState('All');
 
   const categories = ['All', 'Carry', 'Living', 'Objects'];
 
+  const selectedCollection = COLLECTIONS.find(c => c.id === selectedCollectionId);
+
+  // Filter products by collection first if a collection is selected
+  let collectionFilteredProducts = selectedCollectionId 
+    ? products.filter(p => p.collections && p.collections.includes(selectedCollectionId))
+    : products;
+
+  // Then filter by category
   const filteredProducts = activeCategory === 'All' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+    ? collectionFilteredProducts 
+    : collectionFilteredProducts.filter(p => p.category === activeCategory);
 
   return (
     <section id="featured" className="py-20 lg:py-28 bg-[#FAF9F5]">
@@ -23,17 +34,41 @@ export default function FeaturedCollection({
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 pb-6 border-b border-neutral-200/80">
-          <div className="space-y-2 max-w-xl">
-            <span className="text-[11px] uppercase font-bold tracking-widest text-neutral-400">
-              Curated Selection
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-light text-neutral-900 tracking-tight">
-              Featured <span className="font-serif italic font-normal">Collection</span>
-            </h2>
-            <p className="text-sm text-neutral-600 font-normal leading-relaxed">
-              Discover pieces designed to fit effortlessly into your everyday routine.
-            </p>
-          </div>
+          
+          {selectedCollection ? (
+            <div className="space-y-2 max-w-xl">
+              <div className="flex items-center space-x-3">
+                <span className="text-[11px] uppercase font-bold tracking-widest text-neutral-900 bg-neutral-200/80 px-2.5 py-1 rounded-md">
+                  {selectedCollection.itemCount} Objects
+                </span>
+                <button
+                  onClick={onClearCollection}
+                  className="text-xs text-neutral-500 hover:text-black flex items-center space-x-1 underline underline-offset-4 transition-colors"
+                >
+                  <span>Show All Products</span>
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-light text-neutral-900 tracking-tight">
+                {selectedCollection.title}
+              </h2>
+              <p className="text-sm text-neutral-600 font-normal leading-relaxed">
+                {selectedCollection.subtitle}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2 max-w-xl">
+              <span className="text-[11px] uppercase font-bold tracking-widest text-neutral-400">
+                Curated Selection
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-light text-neutral-900 tracking-tight">
+                Featured <span className="font-serif italic font-normal">Collection</span>
+              </h2>
+              <p className="text-sm text-neutral-600 font-normal leading-relaxed">
+                Discover pieces designed to fit effortlessly into your everyday routine.
+              </p>
+            </div>
+          )}
 
           {/* Category Filter Tabs */}
           <div className="flex items-center space-x-6 overflow-x-auto touch-pan-x pr-8 md:pr-0 pb-2 md:pb-0 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
@@ -54,28 +89,52 @@ export default function FeaturedCollection({
         </div>
 
         {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              isWishlisted={wishlistIds.includes(product.id)}
-              onToggleWishlist={onToggleWishlist}
-              onAddToCart={onAddToCart}
-              onQuickView={onQuickView}
-            />
-          ))}
-        </div>
+        {filteredProducts.length === 0 ? (
+          <div className="py-16 text-center space-y-3">
+            <p className="text-sm text-neutral-500 font-medium">
+              No products found matching "{activeCategory}" in this collection.
+            </p>
+            <button
+              onClick={() => setActiveCategory('All')}
+              className="text-xs uppercase font-bold text-neutral-900 underline underline-offset-4"
+            >
+              Reset Category Filter
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                isWishlisted={wishlistIds.includes(product.id)}
+                onToggleWishlist={onToggleWishlist}
+                onAddToCart={onAddToCart}
+                onQuickView={onQuickView}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Bottom Link */}
         <div className="mt-16 text-center">
-          <a
-            href="#collections"
-            className="inline-flex items-center space-x-2 text-xs uppercase font-bold tracking-widest text-neutral-900 hover:text-neutral-600 transition-colors py-2 border-b border-neutral-900 hover:border-neutral-600"
-          >
-            <span>Explore All Series</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          {selectedCollection ? (
+            <button
+              onClick={onClearCollection}
+              className="inline-flex items-center space-x-2 text-xs uppercase font-bold tracking-widest text-neutral-900 hover:text-neutral-600 transition-colors py-2 border-b border-neutral-900 hover:border-neutral-600"
+            >
+              <span>View Full Catalog</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          ) : (
+            <a
+              href="#collections"
+              className="inline-flex items-center space-x-2 text-xs uppercase font-bold tracking-widest text-neutral-900 hover:text-neutral-600 transition-colors py-2 border-b border-neutral-900 hover:border-neutral-600"
+            >
+              <span>Explore All Series</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          )}
         </div>
 
       </div>

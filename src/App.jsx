@@ -15,13 +15,13 @@ import Toast from './components/Toast';
 import { PRODUCTS } from './data/products';
 
 export default function App() {
-  // Shopping bag cart items state with safe localStorage persistence
+  // Shopping bag cart items state with safe localStorage persistence (initialized to empty [] for new visitors)
   const [cartItems, setCartItems] = useState(() => {
     try {
       const saved = localStorage.getItem('vs_cart');
-      return saved ? JSON.parse(saved) : [{ ...PRODUCTS[0], quantity: 1 }];
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      return [{ ...PRODUCTS[0], quantity: 1 }];
+      return [];
     }
   });
 
@@ -34,6 +34,9 @@ export default function App() {
       return [];
     }
   });
+
+  // Selected editorial collection filter state
+  const [selectedCollectionId, setSelectedCollectionId] = useState(null);
   
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
@@ -83,6 +86,18 @@ export default function App() {
 
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
+  };
+
+  const handleSelectCollection = (collectionId) => {
+    setSelectedCollectionId(collectionId);
+    const el = document.getElementById('featured');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleClearCollection = () => {
+    setSelectedCollectionId(null);
   };
 
   const handleAddToCart = (product, quantity = 1) => {
@@ -175,13 +190,18 @@ export default function App() {
           onToggleWishlist={handleToggleWishlist}
           onAddToCart={handleAddToCart}
           onQuickView={(p) => setQuickViewProduct(p)}
+          selectedCollectionId={selectedCollectionId}
+          onClearCollection={handleClearCollection}
         />
 
         {/* 5. Editorial & Series Section */}
-        <EditorialSection onExploreClick={() => {
-          const el = document.getElementById('featured');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }} />
+        <EditorialSection 
+          onExploreClick={() => {
+            const el = document.getElementById('featured');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }} 
+          onSelectCollection={handleSelectCollection}
+        />
 
         {/* 6. Brand Values Section */}
         <BrandValues />

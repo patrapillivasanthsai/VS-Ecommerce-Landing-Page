@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { BRAND_STORY, COLLECTIONS } from '../data/products';
 
-export default function EditorialSection({ onExploreClick }) {
+export default function EditorialSection({ onExploreClick, onSelectCollection }) {
   return (
     <section id="editorial" className="py-20 lg:py-32 bg-[#121212] text-[#FAF9F5] relative overflow-hidden">
       
@@ -71,7 +71,17 @@ export default function EditorialSection({ onExploreClick }) {
             {COLLECTIONS.map((item) => (
               <div 
                 key={item.id} 
-                className="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-neutral-900 cursor-pointer shadow-lg border border-neutral-800"
+                onClick={() => onSelectCollection && onSelectCollection(item.id)}
+                className="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-neutral-900 cursor-pointer shadow-lg border border-neutral-800 hover:border-neutral-600 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelectCollection && onSelectCollection(item.id);
+                  }
+                }}
+                aria-label={`Explore ${item.title} collection`}
               >
                 <img
                   src={item.image}
