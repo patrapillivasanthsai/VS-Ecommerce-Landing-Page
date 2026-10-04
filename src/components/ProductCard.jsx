@@ -6,16 +6,37 @@ export default function ProductCard({
   isWishlisted, 
   onToggleWishlist, 
   onAddToCart, 
-  onQuickView 
+  onQuickView,
+  onOpenDetail
 }) {
   const [isAdded, setIsAdded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  if (!product) return null;
+
+  // Image handling
+  const mainImage = product.images && product.images.length > 0 ? product.images[0] : (product.image || '');
+  const hoverImage = product.images && product.images.length > 1 ? product.images[1] : (product.secondaryImage || mainImage);
+
+  // Price handling
+  const currentPrice = product.salePrice ?? product.price ?? 0;
+  const originalPrice = product.originalPrice ?? null;
+  const hasDiscount = originalPrice && originalPrice > currentPrice;
+  const discountPercent = product.discountPercent ?? (hasDiscount ? Math.round(((originalPrice - currentPrice) / originalPrice) * 100) : null);
 
   const handleAdd = (e) => {
     e.stopPropagation();
     onAddToCart(product);
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 1800);
+  };
+
+  const handleCardClick = () => {
+    if (onOpenDetail) {
+      onOpenDetail(product);
+    } else if (onQuickView) {
+      onQuickView(product);
+    }
   };
 
   return (
@@ -27,24 +48,29 @@ export default function ProductCard({
       {/* Image Container */}
       <div 
         className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-neutral-200/50 cursor-pointer"
-        onClick={() => onQuickView(product)}
+        onClick={handleCardClick}
       >
         {/* Main Product Image */}
         <img
-          src={isHovered && product.secondaryImage ? product.secondaryImage : product.image}
+          src={isHovered ? hoverImage : mainImage}
           alt={product.name}
           className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           loading="lazy"
         />
 
-        {/* Tag Pill (Top Left) */}
-        {product.tag && (
-          <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
+        {/* Badges Stack (Top Left) */}
+        <div className="absolute top-3.5 left-3.5 z-10 flex flex-col space-y-1.5 pointer-events-none">
+          {product.tag && (
             <span className="inline-block px-2.5 py-1 text-[10px] uppercase font-bold tracking-widest bg-white/90 backdrop-blur-md text-neutral-900 rounded-md shadow-xs">
               {product.tag}
             </span>
-          </div>
-        )}
+          )}
+          {hasDiscount && (
+            <span className="inline-block px-2 py-0.5 text-[10px] font-bold tracking-wider bg-rose-900 text-white rounded-md shadow-xs">
+              -{discountPercent}% OFF
+            </span>
+          )}
+        </div>
 
         {/* Top Right Action Icons Stack */}
         <div className="absolute top-3.5 right-3.5 z-10 flex flex-col space-y-2">
@@ -65,16 +91,18 @@ export default function ProductCard({
           </button>
 
           {/* Quick View Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onQuickView(product);
-            }}
-            className="p-2.5 rounded-full bg-white/80 backdrop-blur-md text-neutral-700 hover:text-black hover:bg-white transition-all duration-300 focus:outline-none shadow-xs opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 hidden sm:flex items-center justify-center"
-            aria-label="Quick View"
-          >
-            <Eye className="w-4 h-4 stroke-[1.75]" />
-          </button>
+          {onQuickView && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onQuickView(product);
+              }}
+              className="p-2.5 rounded-full bg-white/80 backdrop-blur-md text-neutral-700 hover:text-black hover:bg-white transition-all duration-300 focus:outline-none shadow-xs opacity-0 group-hover:opacity-100 scale-95 group-hover:scale-100 hidden sm:flex items-center justify-center"
+              aria-label="Quick View"
+            >
+              <Eye className="w-4 h-4 stroke-[1.75]" />
+            </button>
+          )}
         </div>
 
         {/* Add To Bag Slide-Up Bar */}
@@ -95,7 +123,7 @@ export default function ProductCard({
             ) : (
               <>
                 <Plus className="w-3.5 h-3.5" />
-                <span>Add to Bag — ₹{product.price.toLocaleString('en-IN')}</span>
+                <span>Add to Bag — ₹{currentPrice.toLocaleString('en-IN')}</span>
               </>
             )}
           </button>
@@ -105,11 +133,13 @@ export default function ProductCard({
       {/* Product Information Below Image */}
       <div className="mt-3.5 flex items-start justify-between px-1">
         <div className="space-y-0.5">
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
-            {product.category}
-          </span>
+          <div className="flex items-center space-x-2">
+            <span className="text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
+              {product.department ? `${product.department} / ${product.category}` : product.category}
+            </span>
+          </div>
           <h3 
-            onClick={() => onQuickView(product)}
+            onClick={handleCardClick}
             className="text-sm font-medium text-neutral-900 hover:text-neutral-600 transition-colors cursor-pointer line-clamp-1"
           >
             {product.name}
@@ -117,8 +147,13 @@ export default function ProductCard({
         </div>
         <div className="text-right shrink-0 pl-2">
           <span className="text-sm font-semibold text-neutral-900">
-            ₹{product.price.toLocaleString('en-IN')}
+            ₹{currentPrice.toLocaleString('en-IN')}
           </span>
+          {hasDiscount && (
+            <div className="text-[11px] text-neutral-400 line-through">
+              ₹{originalPrice.toLocaleString('en-IN')}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,18 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import AnnouncementBar from './components/AnnouncementBar';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import FeaturedCollection from './components/FeaturedCollection';
-import EditorialSection from './components/EditorialSection';
-import BrandValues from './components/BrandValues';
-import Newsletter from './components/Newsletter';
-import Footer from './components/Footer';
-import CartDrawer from './components/CartDrawer';
-import WishlistDrawer from './components/WishlistDrawer';
-import QuickViewModal from './components/QuickViewModal';
-import SearchModal from './components/SearchModal';
-import Toast from './components/Toast';
-import { PRODUCTS } from './data/products';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import Layout from './components/Layout';
+import HomePage from './pages/HomePage';
+import ShopPage from './pages/ShopPage';
+import DepartmentPage from './pages/DepartmentPage';
+import ProductDetailPage from './pages/ProductDetailPage';
+import CollectionDetailPage from './pages/CollectionDetailPage';
+import LookbookPage from './pages/LookbookPage';
+import OffersPage from './pages/OffersPage';
+import JournalPage from './pages/JournalPage';
+import WishlistPage from './pages/WishlistPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import AboutPage from './pages/AboutPage';
+import SearchPage from './pages/SearchPage';
+import AccountPage from './pages/AccountPage';
+import HelpPage from './pages/HelpPage';
+
+function PageTitleManager() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === '/') {
+      document.title = 'VS — Modern Everyday Fashion';
+    } else if (path === '/shop') {
+      document.title = 'VS — Shop All Collections';
+    } else if (path === '/men') {
+      document.title = 'VS — Men\'s Fashion';
+    } else if (path === '/women') {
+      document.title = 'VS — Women\'s Fashion';
+    } else if (path === '/kids') {
+      document.title = 'VS — Kids\' Collection';
+    } else if (path === '/accessories') {
+      document.title = 'VS — Accessories & Goods';
+    } else if (path === '/lookbook') {
+      document.title = 'VS — Editorial Lookbook';
+    } else if (path === '/offers') {
+      document.title = 'VS — Exclusive Offers';
+    } else if (path === '/journal') {
+      document.title = 'VS — Style Journal';
+    } else if (path === '/wishlist') {
+      document.title = 'VS — Saved Items';
+    } else if (path === '/cart') {
+      document.title = 'VS — Shopping Bag';
+    } else if (path === '/checkout') {
+      document.title = 'VS — Demo Checkout';
+    } else if (path === '/account/orders') {
+      document.title = 'VS — My Demo Orders';
+    } else if (path === '/account/details') {
+      document.title = 'VS — Saved Customer Details';
+    } else if (path.startsWith('/account')) {
+      document.title = 'VS — My Account';
+    } else if (path === '/about') {
+      document.title = 'VS — About Brand';
+    } else if (path === '/help') {
+      document.title = 'VS — Help & Support';
+    } else if (path === '/search') {
+      document.title = 'VS — Search Catalogue';
+    }
+  }, [location]);
+
+  return null;
+}
 
 export default function App() {
   // Shopping bag cart items state with safe localStorage persistence (initialized to empty [] for new visitors)
@@ -35,9 +85,6 @@ export default function App() {
     }
   });
 
-  // Selected editorial collection filter state
-  const [selectedCollectionId, setSelectedCollectionId] = useState(null);
-  
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -88,30 +135,22 @@ export default function App() {
     setToast({ message, type });
   };
 
-  const handleSelectCollection = (collectionId) => {
-    setSelectedCollectionId(collectionId);
-    const el = document.getElementById('featured');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleClearCollection = () => {
-    setSelectedCollectionId(null);
-  };
-
   const handleAddToCart = (product, quantity = 1) => {
     if (!product || !product.id) return;
+
+    // Handle variant-aware item key or fallback to product.id
+    const itemKey = product.variantKey || product.id;
+
     setCartItems(prevItems => {
-      const existing = prevItems.find(item => item.id === product.id);
-      if (existing) {
-        return prevItems.map(item => 
-          item.id === product.id 
-            ? { ...item, quantity: item.quantity + quantity } 
+      const existingIndex = prevItems.findIndex(item => (item.variantKey || item.id) === itemKey);
+      if (existingIndex > -1) {
+        return prevItems.map((item, idx) => 
+          idx === existingIndex 
+            ? { ...item, quantity: item.quantity + (quantity || 1) } 
             : item
         );
       }
-      return [...prevItems, { ...product, quantity }];
+      return [...prevItems, { ...product, quantity: quantity || 1 }];
     });
     showToast(`Added "${product.name}" to your bag.`, 'cart');
   };
@@ -128,16 +167,16 @@ export default function App() {
     }
   };
 
-  const handleUpdateCartQuantity = (id, newQuantity) => {
+  const handleUpdateCartQuantity = (key, newQuantity) => {
     if (newQuantity <= 0) {
-      handleRemoveCartItem(id);
+      handleRemoveCartItem(key);
       return;
     }
-    setCartItems(prev => prev.map(item => item.id === id ? { ...item, quantity: newQuantity } : item));
+    setCartItems(prev => prev.map(item => (item.variantKey || item.id) === key ? { ...item, quantity: newQuantity } : item));
   };
 
-  const handleRemoveCartItem = (id) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
+  const handleRemoveCartItem = (key) => {
+    setCartItems(prev => prev.filter(item => (item.variantKey || item.id) !== key));
     showToast('Item removed from shopping bag.', 'info');
   };
 
@@ -147,109 +186,208 @@ export default function App() {
     setWishlistIds(prev => prev.filter(id => id !== product.id));
   };
 
-  const handleCheckout = () => {
-    setIsCartOpen(false);
-    showToast('Redirecting to secure payment checkout...', 'info');
-    setTimeout(() => {
-      alert('Thank you for exploring VS! In production, this proceeds to Stripe / Shopify Checkout.');
-    }, 500);
+  const handleClearCart = () => {
+    setCartItems([]);
+    try {
+      localStorage.removeItem('vs_cart');
+    } catch {
+      // Ignore
+    }
   };
 
-  const wishlistProducts = PRODUCTS.filter(p => wishlistIds.includes(p.id));
-  const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#121212] font-sans selection:bg-neutral-900 selection:text-white">
-      
-      {/* 1. Top Announcement Bar */}
-      <AnnouncementBar />
-
-      {/* 2. Responsive Header Navigation */}
-      <Navbar
-        cartCount={totalCartCount}
-        wishlistCount={wishlistIds.length}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenWishlist={() => setIsWishlistOpen(true)}
-        onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenQuickView={(p) => setQuickViewProduct(p)}
-      />
-
-      {/* Main Page Layout */}
-      <main className="flex-1">
-        
-        {/* 3. Hero Section */}
-        <Hero onExploreClick={() => {
-          const el = document.getElementById('editorial');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }} />
-
-        {/* 4. Featured Product Grid Collection */}
-        <FeaturedCollection
-          products={PRODUCTS}
-          wishlistIds={wishlistIds}
-          onToggleWishlist={handleToggleWishlist}
-          onAddToCart={handleAddToCart}
-          onQuickView={(p) => setQuickViewProduct(p)}
-          selectedCollectionId={selectedCollectionId}
-          onClearCollection={handleClearCollection}
-        />
-
-        {/* 5. Editorial & Series Section */}
-        <EditorialSection 
-          onExploreClick={() => {
-            const el = document.getElementById('featured');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }} 
-          onSelectCollection={handleSelectCollection}
-        />
-
-        {/* 6. Brand Values Section */}
-        <BrandValues />
-
-        {/* 7. Newsletter Subscription Section */}
-        <Newsletter />
-
-      </main>
-
-      {/* 8. Minimalist Footer */}
-      <Footer />
-
-      {/* Drawers & Modals */}
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
+    <BrowserRouter>
+      <PageTitleManager />
+      <Layout
         cartItems={cartItems}
-        onUpdateQuantity={handleUpdateCartQuantity}
-        onRemoveItem={handleRemoveCartItem}
-        onCheckout={handleCheckout}
-      />
-
-      <WishlistDrawer
-        isOpen={isWishlistOpen}
-        onClose={() => setIsWishlistOpen(false)}
-        wishlistProducts={wishlistProducts}
-        onRemoveWishlist={handleToggleWishlist}
-        onMoveToCart={handleMoveWishlistToCart}
-      />
-
-      <QuickViewModal
-        product={quickViewProduct}
-        onClose={() => setQuickViewProduct(null)}
-        isWishlisted={quickViewProduct ? wishlistIds.includes(quickViewProduct.id) : false}
-        onToggleWishlist={handleToggleWishlist}
+        wishlistIds={wishlistIds}
         onAddToCart={handleAddToCart}
-      />
-
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        products={PRODUCTS}
-        onSelectProduct={(p) => setQuickViewProduct(p)}
-      />
-
-      {/* Toast notifications */}
-      <Toast toast={toast} onClose={() => setToast(null)} />
-
-    </div>
+        onToggleWishlist={handleToggleWishlist}
+        onUpdateCartQuantity={handleUpdateCartQuantity}
+        onRemoveCartItem={handleRemoveCartItem}
+        onMoveWishlistToCart={handleMoveWishlistToCart}
+        isCartOpen={isCartOpen}
+        setIsCartOpen={setIsCartOpen}
+        isWishlistOpen={isWishlistOpen}
+        setIsWishlistOpen={setIsWishlistOpen}
+        isSearchOpen={isSearchOpen}
+        setIsSearchOpen={setIsSearchOpen}
+        quickViewProduct={quickViewProduct}
+        setQuickViewProduct={setQuickViewProduct}
+        toast={toast}
+        setToast={setToast}
+      >
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <HomePage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+              />
+            } 
+          />
+          <Route 
+            path="/shop" 
+            element={
+              <ShopPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+              />
+            } 
+          />
+          <Route 
+            path="/search" 
+            element={
+              <SearchPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+              />
+            } 
+          />
+          <Route 
+            path="/:deptId" 
+            element={
+              <DepartmentPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+              />
+            } 
+          />
+          <Route 
+            path="/product/:id" 
+            element={
+              <ProductDetailPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+                showToast={showToast}
+              />
+            } 
+          />
+          <Route 
+            path="/collections/:slug" 
+            element={
+              <CollectionDetailPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+              />
+            } 
+          />
+          <Route 
+            path="/lookbook" 
+            element={
+              <LookbookPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+              />
+            } 
+          />
+          <Route 
+            path="/offers" 
+            element={
+              <OffersPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+                showToast={showToast}
+              />
+            } 
+          />
+          <Route path="/journal" element={<JournalPage />} />
+          <Route 
+            path="/wishlist" 
+            element={
+              <WishlistPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+              />
+            } 
+          />
+          <Route 
+            path="/cart" 
+            element={
+              <CartPage 
+                cartItems={cartItems} 
+                wishlistIds={wishlistIds}
+                onUpdateQuantity={handleUpdateCartQuantity} 
+                onRemoveItem={handleRemoveCartItem} 
+                onMoveWishlistToCart={handleMoveWishlistToCart}
+                onToggleWishlist={handleToggleWishlist}
+                showToast={showToast}
+              />
+            } 
+          />
+          <Route 
+            path="/checkout" 
+            element={
+              <CheckoutPage 
+                cartItems={cartItems} 
+                onClearCart={handleClearCart} 
+                showToast={showToast}
+              />
+            } 
+          />
+          <Route 
+            path="/account" 
+            element={
+              <AccountPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+                cartItems={cartItems}
+                showToast={showToast}
+              />
+            } 
+          />
+          <Route 
+            path="/account/orders" 
+            element={
+              <AccountPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+                cartItems={cartItems}
+                showToast={showToast}
+              />
+            } 
+          />
+          <Route 
+            path="/account/details" 
+            element={
+              <AccountPage 
+                wishlistIds={wishlistIds} 
+                onToggleWishlist={handleToggleWishlist} 
+                onAddToCart={handleAddToCart} 
+                onQuickView={setQuickViewProduct} 
+                cartItems={cartItems}
+                showToast={showToast}
+              />
+            } 
+          />
+          <Route path="/help" element={<HelpPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
