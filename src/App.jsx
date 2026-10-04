@@ -85,11 +85,40 @@ export default function App() {
     }
   });
 
+  // Theme mode state (light/dark) with safe vs_theme localStorage persistence & system fallback
+  const [theme, setTheme] = useState(() => {
+    try {
+      const saved = localStorage.getItem('vs_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [toast, setToast] = useState(null);
+
+  // Sync theme to localStorage and HTML root element
+  useEffect(() => {
+    try {
+      localStorage.setItem('vs_theme', theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch {
+      // Ignore
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   // Sync cart items to localStorage silently without triggering toasts
   useEffect(() => {
@@ -199,6 +228,8 @@ export default function App() {
     <BrowserRouter>
       <PageTitleManager />
       <Layout
+        theme={theme}
+        toggleTheme={toggleTheme}
         cartItems={cartItems}
         wishlistIds={wishlistIds}
         onAddToCart={handleAddToCart}

@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Layout({
   children,
+  theme,
+  toggleTheme,
   cartItems,
   wishlistIds,
   onAddToCart,
@@ -40,12 +42,14 @@ export default function Layout({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#121212] font-sans selection:bg-neutral-900 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#121212] dark:bg-[#0F0F12] dark:text-[#F4F4F5] transition-colors duration-300 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-amber-400 dark:selection:text-black">
       {/* 1. Announcement Bar */}
       <AnnouncementBar />
 
       {/* 2. Responsive Main Header Navigation */}
       <Navbar
+        theme={theme}
+        toggleTheme={toggleTheme}
         cartCount={totalCartCount}
         wishlistCount={wishlistIds.length}
         onOpenCart={() => setIsCartOpen(true)}

@@ -17,14 +17,14 @@ export default function LookbookPage({
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-neutral-900 text-white text-[10px] uppercase font-bold tracking-widest mx-auto">
-          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-[10px] uppercase font-bold tracking-widest mx-auto">
+          <Sparkles className="w-3.5 h-3.5 text-amber-300 dark:text-amber-500" />
           <span>Atelier Styling 2026</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-neutral-900">
+        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-neutral-900 dark:text-neutral-100">
           Seasonal Lookbook
         </h1>
-        <p className="text-xs sm:text-sm text-neutral-500 font-medium leading-relaxed">
+        <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 font-medium leading-relaxed">
           Curated outfit compositions referencing our single-source product catalog. Explore complete looks and easily view individual items.
         </p>
       </div>
@@ -35,7 +35,7 @@ export default function LookbookPage({
           const outfitProducts = getProductsByIds(outfit.productIds);
 
           return (
-            <div key={outfit.id} className="border-b border-neutral-200/80 pb-16 last:border-0">
+            <div key={outfit.id} className="border-b border-neutral-200/80 dark:border-neutral-800 pb-16 last:border-0">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
                 
                 {/* Outfit Poster Image */}
@@ -61,9 +61,9 @@ export default function LookbookPage({
 
                 {/* Tagged Matched Products */}
                 <div className={`lg:col-span-7 space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <div className="flex items-center space-x-2 border-b border-neutral-200 pb-3">
-                    <Layers className="w-4 h-4 text-neutral-900" />
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-900">
+                  <div className="flex items-center space-x-2 border-b border-neutral-200 dark:border-neutral-800 pb-3">
+                    <Layers className="w-4 h-4 text-neutral-900 dark:text-neutral-100" />
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-100">
                       Pieces In This Look ({outfitProducts.length} Objects)
                     </h3>
                   </div>

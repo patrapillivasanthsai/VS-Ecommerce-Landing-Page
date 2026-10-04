@@ -4,11 +4,11 @@ import { BRAND_STORY, COLLECTIONS } from '../data/products';
 
 export default function EditorialSection({ onExploreClick, onSelectCollection }) {
   return (
-    <section id="editorial" className="py-20 lg:py-32 bg-[#121212] text-[#FAF9F5] relative overflow-hidden">
+    <section id="editorial" className="py-20 lg:py-32 bg-[#121212] dark:bg-[#0A0A0C] text-[#FAF9F5] dark:text-[#F4F4F5] relative overflow-hidden transition-colors duration-300">
       
       {/* Editorial Main Highlight Banner */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-3xl overflow-hidden min-h-[520px] lg:min-h-[640px] flex items-center shadow-2xl">
+        <div className="relative rounded-3xl overflow-hidden min-h-[520px] lg:min-h-[640px] flex items-center shadow-2xl border border-neutral-800 dark:border-neutral-900">
           
           {/* Background Editorial Image with subtle dark gradient overlay */}
           <div className="absolute inset-0">
@@ -28,7 +28,7 @@ export default function EditorialSection({ onExploreClick, onSelectCollection })
             
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-white leading-tight">
               {BRAND_STORY.quote.split(',')[0]}, <br />
-              <span className="font-serif italic font-normal text-neutral-200">
+              <span className="font-serif italic font-normal text-amber-300">
                 {BRAND_STORY.quote.split(',')[1]}
               </span>
             </h2>
@@ -41,7 +41,7 @@ export default function EditorialSection({ onExploreClick, onSelectCollection })
               <a
                 href="#collections"
                 onClick={onExploreClick}
-                className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-neutral-900 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-neutral-200 transition-all duration-300 shadow-xl group"
+                className="inline-flex items-center space-x-3 px-8 py-4 bg-white text-neutral-900 rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-amber-300 transition-all duration-300 shadow-xl group"
               >
                 <span>Explore Collection</span>
                 <ArrowUpRight className="w-4 h-4 text-neutral-900 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -55,11 +55,11 @@ export default function EditorialSection({ onExploreClick, onSelectCollection })
         <div id="collections" className="mt-24 pt-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-neutral-400">
+              <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
                 Curated Environments
               </span>
               <h3 className="text-3xl font-light text-white tracking-tight mt-1">
-                Explore by <span className="font-serif italic font-normal">Series</span>
+                Explore by <span className="font-serif italic font-normal text-amber-300">Series</span>
               </h3>
             </div>
             <p className="text-sm text-neutral-400 max-w-xs mt-2 md:mt-0 font-light">
@@ -72,7 +72,7 @@ export default function EditorialSection({ onExploreClick, onSelectCollection })
               <div 
                 key={item.id} 
                 onClick={() => onSelectCollection && onSelectCollection(item.id)}
-                className="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-neutral-900 cursor-pointer shadow-lg border border-neutral-800 hover:border-neutral-600 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                className="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-neutral-900 cursor-pointer shadow-lg border border-neutral-800 dark:border-neutral-800/80 hover:border-amber-400/50 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -94,13 +94,13 @@ export default function EditorialSection({ onExploreClick, onSelectCollection })
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
                     {item.itemCount} Objects
                   </span>
-                  <h4 className="text-xl font-medium text-white mt-1 group-hover:text-neutral-200 transition-colors">
+                  <h4 className="text-xl font-medium text-white mt-1 group-hover:text-amber-300 transition-colors">
                     {item.title}
                   </h4>
                   <p className="text-xs text-neutral-300 mt-2 line-clamp-2 font-normal opacity-90">
                     {item.subtitle}
                   </p>
-                  <div className="mt-4 flex items-center text-xs font-semibold uppercase tracking-wider text-white group-hover:translate-x-1 transition-transform">
+                  <div className="mt-4 flex items-center text-xs font-semibold uppercase tracking-wider text-white group-hover:text-amber-300 group-hover:translate-x-1 transition-all">
                     <span>Discover Series</span>
                     <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
                   </div>

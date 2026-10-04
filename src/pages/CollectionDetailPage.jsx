@@ -38,11 +38,11 @@ export default function CollectionDetailPage({
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-8">
-        <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
-          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+        <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-4">
+          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
             Showing {collectionProducts.length} Objects in this edit
           </span>
-          <Link to="/shop" className="text-xs font-semibold uppercase tracking-wider text-neutral-900 hover:underline">
+          <Link to="/shop" className="text-xs font-semibold uppercase tracking-wider text-neutral-900 dark:text-neutral-100 hover:underline">
             View All Collections
           </Link>
         </div>

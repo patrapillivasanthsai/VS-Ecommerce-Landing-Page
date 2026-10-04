@@ -73,48 +73,48 @@ export default function SearchPage({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       
       {/* Search Header */}
-      <div className="border-b border-neutral-200 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="border-b border-neutral-200 dark:border-neutral-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-amber-900 block mb-1">SEARCH RESULTS</span>
-          <h1 className="text-3xl sm:text-4xl font-black text-neutral-900">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-900 dark:text-amber-400 block mb-1">SEARCH RESULTS</span>
+          <h1 className="text-3xl sm:text-4xl font-black text-neutral-900 dark:text-neutral-100">
             {queryParam ? `Search Results for "${queryParam}"` : 'All Search Results'}
           </h1>
-          <p className="text-xs text-neutral-500 mt-1 font-medium">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1 font-medium">
             {searchResults.length === 1 ? '1 product match' : `${searchResults.length} product matches`} found across the VS catalogue.
           </p>
         </div>
 
         <div className="text-right shrink-0">
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">
+          <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
             Showing {visibleProducts.length} of {searchResults.length} Results
           </span>
         </div>
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center justify-between gap-4 bg-neutral-100/80 p-4 rounded-2xl border border-neutral-200/80">
+      <div className="flex items-center justify-between gap-4 bg-neutral-100/80 dark:bg-neutral-800/80 p-4 rounded-2xl border border-neutral-200/80 dark:border-neutral-700/80">
         <button
           onClick={() => setIsMobileDrawerOpen(true)}
-          className="lg:hidden flex items-center space-x-2 px-4 py-2 bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-xs"
+          className="lg:hidden flex items-center space-x-2 px-4 py-2 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl shadow-xs"
         >
           <Filter className="w-3.5 h-3.5" />
           <span>Refine Results</span>
         </button>
 
-        <div className="flex items-center space-x-2 bg-white px-3.5 py-2 rounded-xl border border-neutral-200 text-xs ml-auto">
-          <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500" />
-          <span className="font-bold text-neutral-900 uppercase tracking-wider hidden sm:inline">Sort By:</span>
+        <div className="flex items-center space-x-2 bg-white dark:bg-[#18181C] px-3.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-xs ml-auto">
+          <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+          <span className="font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider hidden sm:inline">Sort By:</span>
           <select
             value={sortParam}
             onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-            className="bg-transparent font-semibold text-neutral-800 focus:outline-none cursor-pointer"
+            className="bg-transparent font-semibold text-neutral-800 dark:text-neutral-200 focus:outline-none cursor-pointer"
           >
-            <option value="recommended">Recommended</option>
-            <option value="newest">Newest Arrivals</option>
-            <option value="priceLow">Price: Low to High</option>
-            <option value="priceHigh">Price: High to Low</option>
-            <option value="discountHigh">Biggest Discount</option>
-            <option value="ratingHigh">Highest Customer Rating</option>
+            <option value="recommended" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Recommended</option>
+            <option value="newest" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Newest Arrivals</option>
+            <option value="priceLow" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Price: Low to High</option>
+            <option value="priceHigh" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Price: High to Low</option>
+            <option value="discountHigh" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Biggest Discount</option>
+            <option value="ratingHigh" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Highest Customer Rating</option>
           </select>
         </div>
       </div>
@@ -139,13 +139,13 @@ export default function SearchPage({
           {searchResults.length === 0 ? (
             /* Empty Search Results View */
             <div className="space-y-12">
-              <div className="text-center py-16 bg-white rounded-3xl border border-dashed border-neutral-300 p-8 space-y-5">
-                <div className="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center mx-auto text-neutral-400">
+              <div className="text-center py-16 bg-white dark:bg-[#18181C] rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 p-8 space-y-5">
+                <div className="w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto text-neutral-400 dark:text-neutral-500">
                   <Search className="w-8 h-8 stroke-[1.5]" />
                 </div>
                 <div className="space-y-2">
-                  <h2 className="text-xl font-bold text-neutral-900">NO RESULTS FOUND FOR "{queryParam}"</h2>
-                  <p className="text-xs text-neutral-500 max-w-md mx-auto leading-relaxed">
+                  <h2 className="text-xl font-bold text-neutral-900 dark:text-neutral-100">NO RESULTS FOUND FOR "{queryParam}"</h2>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 max-w-md mx-auto leading-relaxed">
                     We couldn't find any products matching your search term. Try checking spelling or explore our departments below.
                   </p>
                 </div>
@@ -153,25 +153,25 @@ export default function SearchPage({
                 <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
                   <button
                     onClick={() => setSearchParams({})}
-                    className="px-5 py-2.5 bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black transition-colors"
+                    className="px-5 py-2.5 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black dark:hover:bg-white transition-colors"
                   >
                     Clear Search Query
                   </button>
                   <Link
                     to="/women"
-                    className="px-5 py-2.5 bg-neutral-100 text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 border border-neutral-200"
+                    className="px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700"
                   >
                     Browse Women
                   </Link>
                   <Link
                     to="/men"
-                    className="px-5 py-2.5 bg-neutral-100 text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 border border-neutral-200"
+                    className="px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700"
                   >
                     Browse Men
                   </Link>
                   <Link
                     to="/accessories"
-                    className="px-5 py-2.5 bg-neutral-100 text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 border border-neutral-200"
+                    className="px-5 py-2.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-neutral-700"
                   >
                     Browse Accessories
                   </Link>
@@ -179,10 +179,10 @@ export default function SearchPage({
               </div>
 
               {/* Recommended Items Grid */}
-              <div className="space-y-6 pt-6 border-t border-neutral-200">
+              <div className="space-y-6 pt-6 border-t border-neutral-200 dark:border-neutral-800">
                 <div>
-                  <h3 className="text-xl font-extrabold text-neutral-900">Recommended VS Essentials</h3>
-                  <p className="text-xs text-neutral-500 mt-1 font-medium">Bestseller fashion objects for modern wardrobes</p>
+                  <h3 className="text-xl font-extrabold text-neutral-900 dark:text-neutral-100">Recommended VS Essentials</h3>
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1 font-medium">Bestseller fashion objects for modern wardrobes</p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -221,7 +221,7 @@ export default function SearchPage({
                 <div className="text-center pt-8">
                   <button
                     onClick={() => setVisibleCount(prev => prev + 12)}
-                    className="px-8 py-3.5 bg-white border border-neutral-900 text-neutral-900 text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-900 hover:text-white transition-all shadow-xs"
+                    className="px-8 py-3.5 bg-white dark:bg-[#18181C] border border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-900 dark:hover:bg-white hover:text-white dark:hover:text-neutral-900 transition-all shadow-xs"
                   >
                     Load More Results ({searchResults.length - visibleCount} remaining)
                   </button>

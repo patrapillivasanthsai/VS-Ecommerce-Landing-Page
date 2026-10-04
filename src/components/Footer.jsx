@@ -20,7 +20,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#121212] text-[#FAF9F5] border-t border-neutral-800 pt-16 pb-12">
+    <footer className="bg-[#121212] text-[#FAF9F5] dark:bg-[#09090B] dark:text-[#F4F4F5] border-t border-neutral-800 dark:border-neutral-900 pt-16 pb-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Newsletter Strip inside Footer */}
@@ -169,7 +169,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 font-normal gap-4">
-          <p>© 2026 VS Fashion Inc. All rights reserved. Crafted for contemporary living.</p>
+          <p>© 2026 VS Fashion Inc.</p>
           
           <div className="flex items-center space-x-6">
             <Link to="/about" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>

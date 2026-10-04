@@ -25,33 +25,33 @@ export default function AboutPage() {
       </div>
 
       {/* Main Narrative */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-neutral-800">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 text-neutral-800 dark:text-neutral-200">
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold tracking-tight text-neutral-900">Crafting Contemporary Fashion Essentials</h2>
-          <p className="text-sm font-normal leading-relaxed text-neutral-600">
+          <h2 className="text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">Crafting Contemporary Fashion Essentials</h2>
+          <p className="text-sm font-normal leading-relaxed text-neutral-600 dark:text-neutral-300">
             Founded with a singular mission: to strip away artificial fashion markups, seasonal gimmicks, and fast-fashion waste. We design elevated everyday wear using long-staple French linen, GOTS certified organic cotton, grade-A cashmere, and full-grain Tuscan leather.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-          <div className="p-6 bg-white rounded-3xl border border-neutral-200/80 shadow-xs space-y-2">
-            <Compass className="w-6 h-6 text-neutral-900" />
-            <h3 className="text-base font-bold text-neutral-900">Honest Pricing</h3>
-            <p className="text-xs text-neutral-500 font-normal leading-relaxed">
+          <div className="p-6 bg-white dark:bg-[#18181C] rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-xs space-y-2">
+            <Compass className="w-6 h-6 text-neutral-900 dark:text-neutral-100" />
+            <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">Honest Pricing</h3>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-normal leading-relaxed">
               Transparent cost structure with realistic INR pricing and genuine savings on every object.
             </p>
           </div>
-          <div className="p-6 bg-white rounded-3xl border border-neutral-200/80 shadow-xs space-y-2">
-            <ShieldCheck className="w-6 h-6 text-neutral-900" />
-            <h3 className="text-base font-bold text-neutral-900">Craftsmanship</h3>
-            <p className="text-xs text-neutral-500 font-normal leading-relaxed">
+          <div className="p-6 bg-white dark:bg-[#18181C] rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-xs space-y-2">
+            <ShieldCheck className="w-6 h-6 text-neutral-900 dark:text-neutral-100" />
+            <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">Craftsmanship</h3>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-normal leading-relaxed">
               Double-stitched hems, mother-of-pearl buttons, and hand-finished seams designed to last.
             </p>
           </div>
-          <div className="p-6 bg-white rounded-3xl border border-neutral-200/80 shadow-xs space-y-2">
-            <Heart className="w-6 h-6 text-neutral-900" />
-            <h3 className="text-base font-bold text-neutral-900">Responsibility</h3>
-            <p className="text-xs text-neutral-500 font-normal leading-relaxed">
+          <div className="p-6 bg-white dark:bg-[#18181C] rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-xs space-y-2">
+            <Heart className="w-6 h-6 text-neutral-900 dark:text-neutral-100" />
+            <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">Responsibility</h3>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 font-normal leading-relaxed">
               Ethical artisan partnerships and plastic-free recyclable packaging across all orders.
             </p>
           </div>

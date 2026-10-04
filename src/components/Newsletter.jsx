@@ -17,26 +17,26 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="py-24 lg:py-32 bg-[#121212] text-[#FAF9F5] relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-[#121212] dark:bg-[#0A0A0C] text-[#FAF9F5] dark:text-[#F4F4F5] relative overflow-hidden transition-colors duration-300 border-t border-neutral-800 dark:border-neutral-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <div className="space-y-3 max-w-xl mx-auto">
-          <span className="text-[11px] uppercase font-bold tracking-widest text-neutral-400">
+          <span className="text-[11px] uppercase font-bold tracking-widest text-neutral-400 dark:text-neutral-500">
             Exclusive Journal
           </span>
           
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white">
-            Stay in <span className="font-serif italic font-normal text-neutral-300">the loop.</span>
+            Stay in <span className="font-serif italic font-normal text-amber-300">the loop.</span>
           </h2>
           
           <p className="text-sm text-neutral-400 font-normal leading-relaxed">
-            Get first access to new collections, special releases and stories from VS. Zero spam, unsubscribe anytime.
+            Get first access to new fashion collections, special releases and stories from VS. Zero spam, unsubscribe anytime.
           </p>
         </div>
 
         {/* Newsletter Form */}
         <div className="mt-10 max-w-md mx-auto">
           {submitted ? (
-            <div className="p-6 rounded-2xl bg-neutral-900 border border-neutral-800 text-center space-y-2">
+            <div className="p-6 rounded-2xl bg-neutral-900 dark:bg-[#141418] border border-neutral-800 text-center space-y-2">
               <CheckCircle2 className="w-6 h-6 text-emerald-400 mx-auto" />
               <h3 className="text-sm font-semibold text-white">Welcome to VS.</h3>
               <p className="text-xs text-neutral-400">
@@ -45,7 +45,7 @@ export default function Newsletter() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
-              <div className="flex flex-col sm:flex-row items-center gap-2 bg-neutral-900 border border-neutral-800 rounded-full p-1.5 focus-within:border-neutral-600 transition-all">
+              <div className="flex flex-col sm:flex-row items-center gap-2 bg-neutral-900 dark:bg-[#141418] border border-neutral-800 rounded-full p-1.5 focus-within:border-amber-400 transition-all">
                 <input
                   type="email"
                   value={email}
@@ -59,7 +59,7 @@ export default function Newsletter() {
                 />
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-7 py-3 bg-white text-neutral-900 hover:bg-neutral-200 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shrink-0 flex items-center justify-center space-x-2 group"
+                  className="w-full sm:w-auto px-7 py-3 bg-white text-neutral-900 hover:bg-amber-300 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shrink-0 flex items-center justify-center space-x-2 group"
                 >
                   <span>Subscribe</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

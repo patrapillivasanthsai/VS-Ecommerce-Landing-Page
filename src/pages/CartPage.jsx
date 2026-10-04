@@ -77,30 +77,30 @@ export default function CartPage({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
       
       {/* Page Header */}
-      <div className="border-b border-neutral-200 pb-6 flex items-center justify-between">
+      <div className="border-b border-neutral-200 dark:border-neutral-800 pb-6 flex items-center justify-between">
         <div>
           <div className="flex items-center space-x-2">
-            <ShoppingBag className="w-6 h-6 text-neutral-900" />
-            <h1 className="text-3xl font-black text-neutral-900">Your Shopping Bag</h1>
+            <ShoppingBag className="w-6 h-6 text-neutral-900 dark:text-neutral-100" />
+            <h1 className="text-3xl font-black text-neutral-900 dark:text-neutral-100">Your Shopping Bag</h1>
           </div>
-          <p className="text-xs text-neutral-500 mt-1 font-medium">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1 font-medium">
             {summary.totalItems === 1 ? '1 object' : `${summary.totalItems} objects`} in your bag.
           </p>
         </div>
-        <Link to="/shop" className="text-xs font-bold uppercase tracking-wider text-neutral-900 hover:underline">
+        <Link to="/shop" className="text-xs font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-100 hover:underline">
           Continue Shopping
         </Link>
       </div>
 
       {cartItems.length === 0 ? (
         /* Empty Cart View */
-        <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-neutral-300 space-y-6 max-w-xl mx-auto p-8 shadow-xs">
-          <div className="w-20 h-20 rounded-full bg-neutral-100 flex items-center justify-center mx-auto text-neutral-400">
+        <div className="text-center py-20 bg-white dark:bg-[#18181C] rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 space-y-6 max-w-xl mx-auto p-8 shadow-xs">
+          <div className="w-20 h-20 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto text-neutral-400 dark:text-neutral-500">
             <ShoppingBag className="w-10 h-10 stroke-[1.5]" />
           </div>
           <div className="space-y-2">
-            <h2 className="text-2xl font-black text-neutral-900 uppercase">YOUR BAG IS EMPTY</h2>
-            <p className="text-xs sm:text-sm text-neutral-500 max-w-md mx-auto leading-relaxed">
+            <h2 className="text-2xl font-black text-neutral-900 dark:text-neutral-100 uppercase">YOUR BAG IS EMPTY</h2>
+            <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 max-w-md mx-auto leading-relaxed">
               Discover structured fashion pieces designed for your everyday wardrobe.
             </p>
           </div>
@@ -108,19 +108,19 @@ export default function CartPage({
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <Link
               to="/women"
-              className="w-full sm:w-auto px-6 py-3 bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black transition-colors"
+              className="w-full sm:w-auto px-6 py-3 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black dark:hover:bg-white transition-colors"
             >
               Shop Women
             </Link>
             <Link
               to="/men"
-              className="w-full sm:w-auto px-6 py-3 bg-neutral-100 text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 transition-colors border border-neutral-200"
+              className="w-full sm:w-auto px-6 py-3 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors border border-neutral-200 dark:border-neutral-700"
             >
               Shop Men
             </Link>
             <Link
               to="/accessories"
-              className="w-full sm:w-auto px-6 py-3 bg-neutral-100 text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 transition-colors border border-neutral-200"
+              className="w-full sm:w-auto px-6 py-3 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors border border-neutral-200 dark:border-neutral-700"
             >
               Explore Accessories
             </Link>
@@ -141,14 +141,14 @@ export default function CartPage({
               const discountPercent = item.discountPercent || (hasDiscount ? Math.round(((mrpPrice - salePrice) / mrpPrice) * 100) : 0);
 
               return (
-                <div key={itemKey} className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-5 p-5 bg-white rounded-3xl border border-neutral-200/80 shadow-xs hover:border-neutral-400 transition-all">
+                <div key={itemKey} className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-5 p-5 bg-white dark:bg-[#18181C] rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-xs hover:border-neutral-400 dark:hover:border-neutral-600 transition-all">
                   
                   {/* Thumbnail Image */}
                   <Link to={`/product/${item.id}`} className="shrink-0">
                     <img
                       src={img}
                       alt={item.name}
-                      className="w-full sm:w-28 h-36 object-cover object-center rounded-2xl bg-neutral-100"
+                      className="w-full sm:w-28 h-36 object-cover object-center rounded-2xl bg-neutral-100 dark:bg-neutral-800"
                     />
                   </Link>
 
@@ -157,21 +157,21 @@ export default function CartPage({
                     <div>
                       <div className="flex justify-between items-start">
                         <div>
-                          <span className="text-[10px] uppercase font-bold tracking-widest text-neutral-400">
+                          <span className="text-[10px] uppercase font-bold tracking-widest text-neutral-400 dark:text-neutral-500">
                             {item.department ? `${item.department} / ${item.category}` : item.category}
                           </span>
-                          <h3 className="text-base font-bold text-neutral-900 hover:text-neutral-600 transition-colors">
+                          <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100 hover:text-neutral-600 dark:hover:text-neutral-400 transition-colors">
                             <Link to={`/product/${item.id}`}>{item.name}</Link>
                           </h3>
                         </div>
 
                         {/* Price Display */}
                         <div className="text-right shrink-0 ml-2">
-                          <span className="text-base font-black text-neutral-900">
+                          <span className="text-base font-black text-neutral-900 dark:text-neutral-100">
                             ₹{(salePrice * item.quantity).toLocaleString('en-IN')}
                           </span>
                           {hasDiscount && (
-                            <div className="text-xs text-neutral-400 line-through">
+                            <div className="text-xs text-neutral-400 dark:text-neutral-500 line-through">
                               ₹{(mrpPrice * item.quantity).toLocaleString('en-IN')}
                             </div>
                           )}
@@ -179,20 +179,20 @@ export default function CartPage({
                       </div>
 
                       {/* Variant Badges */}
-                      <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-neutral-600">
+                      <div className="flex flex-wrap items-center gap-2 mt-2 text-xs text-neutral-600 dark:text-neutral-400">
                         {item.selectedSize && (
-                          <span className="px-2.5 py-0.5 bg-neutral-100 rounded-md font-semibold text-neutral-800 border border-neutral-200">
+                          <span className="px-2.5 py-0.5 bg-neutral-100 dark:bg-neutral-800 rounded-md font-semibold text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700">
                             Size: {item.selectedSize}
                           </span>
                         )}
                         {item.selectedColor && (
-                          <span className="flex items-center space-x-1 px-2.5 py-0.5 bg-neutral-100 rounded-md font-semibold text-neutral-800 border border-neutral-200">
+                          <span className="flex items-center space-x-1 px-2.5 py-0.5 bg-neutral-100 dark:bg-neutral-800 rounded-md font-semibold text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700">
                             <span className="w-2.5 h-2.5 rounded-full border border-black/20" style={{ backgroundColor: item.selectedColor.hex || '#000' }} />
                             <span>{item.selectedColor.name || item.selectedColor}</span>
                           </span>
                         )}
                         {hasDiscount && (
-                          <span className="px-2 py-0.5 bg-rose-100 text-rose-800 text-[10px] font-bold rounded">
+                          <span className="px-2 py-0.5 bg-rose-100 dark:bg-rose-950/80 text-rose-800 dark:text-rose-300 text-[10px] font-bold rounded">
                             -{discountPercent}% OFF
                           </span>
                         )}
@@ -200,21 +200,21 @@ export default function CartPage({
                     </div>
 
                     {/* Quantity & Item Actions Toolbar */}
-                    <div className="flex items-center justify-between pt-3 border-t border-neutral-100">
+                    <div className="flex items-center justify-between pt-3 border-t border-neutral-100 dark:border-neutral-800">
                       
                       {/* Quantity Selector */}
-                      <div className="flex items-center border border-neutral-300 rounded-xl bg-neutral-50">
+                      <div className="flex items-center border border-neutral-300 dark:border-neutral-700 rounded-xl bg-neutral-50 dark:bg-neutral-800">
                         <button
                           onClick={() => onUpdateQuantity(itemKey, item.quantity - 1)}
-                          className="p-2 text-neutral-600 hover:text-black focus:outline-none"
+                          className="p-2 text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none"
                           aria-label="Decrease quantity"
                         >
                           <Minus className="w-3.5 h-3.5" />
                         </button>
-                        <span className="px-3 text-xs font-bold text-neutral-900">{item.quantity}</span>
+                        <span className="px-3 text-xs font-bold text-neutral-900 dark:text-neutral-100">{item.quantity}</span>
                         <button
                           onClick={() => onUpdateQuantity(itemKey, item.quantity + 1)}
-                          className="p-2 text-neutral-600 hover:text-black focus:outline-none"
+                          className="p-2 text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white focus:outline-none"
                           aria-label="Increase quantity"
                         >
                           <Plus className="w-3.5 h-3.5" />
@@ -222,10 +222,10 @@ export default function CartPage({
                       </div>
 
                       {/* Move to Wishlist & Delete Action */}
-                      <div className="flex items-center space-x-3 text-xs font-semibold text-neutral-500">
+                      <div className="flex items-center space-x-3 text-xs font-semibold text-neutral-500 dark:text-neutral-400">
                         <button
                           onClick={() => handleMoveToWishlist(item)}
-                          className="hover:text-neutral-900 flex items-center space-x-1 transition-colors"
+                          className="hover:text-neutral-900 dark:hover:text-neutral-100 flex items-center space-x-1 transition-colors"
                         >
                           <Heart className="w-3.5 h-3.5 text-rose-500" />
                           <span className="hidden sm:inline">Move to Wishlist</span>
@@ -233,7 +233,7 @@ export default function CartPage({
 
                         <button
                           onClick={() => onRemoveItem(itemKey)}
-                          className="hover:text-rose-600 flex items-center space-x-1 transition-colors p-1"
+                          className="hover:text-rose-600 dark:hover:text-rose-400 flex items-center space-x-1 transition-colors p-1"
                           aria-label="Remove item"
                         >
                           <Trash2 className="w-4 h-4" />

@@ -37,43 +37,43 @@ export default function HelpPage() {
       
       {/* Header */}
       <div className="text-center space-y-4 max-w-xl mx-auto">
-        <span className="text-xs font-bold uppercase tracking-widest text-amber-900 bg-amber-100 px-3.5 py-1 rounded-full">
+        <span className="text-xs font-bold uppercase tracking-widest text-amber-900 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/80 px-3.5 py-1 rounded-full">
           SUPPORT & GUIDANCE
         </span>
-        <h1 className="text-3xl sm:text-4xl font-black text-neutral-900 tracking-tight">
+        <h1 className="text-3xl sm:text-4xl font-black text-neutral-900 dark:text-neutral-100 tracking-tight">
           Help & Frequently Asked Questions
         </h1>
-        <p className="text-xs sm:text-sm text-neutral-600 font-medium leading-relaxed">
+        <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 font-medium leading-relaxed">
           Everything you need to know about navigating the VS fashion store, using coupons, managing your wishlist, and demo checkout functionality.
         </p>
       </div>
 
       {/* Accordion FAQ List */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-neutral-200/80 shadow-xs space-y-4">
-        <h2 className="text-base font-bold uppercase tracking-wider text-neutral-900 pb-3 border-b border-neutral-200 flex items-center space-x-2">
-          <HelpCircle className="w-5 h-5 text-neutral-900" />
+      <div className="bg-white dark:bg-[#18181C] p-6 sm:p-8 rounded-3xl border border-neutral-200/80 dark:border-neutral-800 shadow-xs space-y-4">
+        <h2 className="text-base font-bold uppercase tracking-wider text-neutral-900 dark:text-neutral-100 pb-3 border-b border-neutral-200 dark:border-neutral-800 flex items-center space-x-2">
+          <HelpCircle className="w-5 h-5 text-neutral-900 dark:text-neutral-100" />
           <span>Frequently Asked Questions</span>
         </h2>
 
         <div className="space-y-3">
           {faqs.map((faq, idx) => (
-            <div key={idx} className="border-b border-neutral-100 last:border-0 pb-3">
+            <div key={idx} className="border-b border-neutral-100 dark:border-neutral-800 last:border-0 pb-3">
               <button
                 onClick={() => setOpenFaqIndex(openFaqIndex === idx ? null : idx)}
                 className="w-full flex items-center justify-between text-left py-2 focus:outline-none"
               >
-                <span className="text-xs sm:text-sm font-bold text-neutral-900 pr-4">
+                <span className="text-xs sm:text-sm font-bold text-neutral-900 dark:text-neutral-100 pr-4">
                   {faq.question}
                 </span>
                 {openFaqIndex === idx ? (
-                  <ChevronUp className="w-4 h-4 text-neutral-500 shrink-0" />
+                  <ChevronUp className="w-4 h-4 text-neutral-500 dark:text-neutral-400 shrink-0" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-neutral-500 shrink-0" />
+                  <ChevronDown className="w-4 h-4 text-neutral-500 dark:text-neutral-400 shrink-0" />
                 )}
               </button>
 
               {openFaqIndex === idx && (
-                <p className="text-xs text-neutral-600 font-normal leading-relaxed mt-2 pl-1 pt-1 border-l-2 border-neutral-900">
+                <p className="text-xs text-neutral-600 dark:text-neutral-300 font-normal leading-relaxed mt-2 pl-1 pt-1 border-l-2 border-neutral-900 dark:border-neutral-100">
                   {faq.answer}
                 </p>
               )}
@@ -83,14 +83,14 @@ export default function HelpPage() {
       </div>
 
       {/* Support Disclaimer & Contact Note */}
-      <div className="bg-neutral-100/80 p-6 sm:p-8 rounded-3xl border border-neutral-200/80 space-y-4 text-center">
-        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto text-neutral-900 shadow-xs">
+      <div className="bg-neutral-100/80 dark:bg-neutral-800/80 p-6 sm:p-8 rounded-3xl border border-neutral-200/80 dark:border-neutral-700/80 space-y-4 text-center">
+        <div className="w-12 h-12 bg-white dark:bg-[#18181C] rounded-full flex items-center justify-center mx-auto text-neutral-900 dark:text-neutral-100 shadow-xs">
           <ShieldCheck className="w-6 h-6 stroke-[1.5]" />
         </div>
 
         <div className="space-y-1 max-w-md mx-auto">
-          <h3 className="text-base font-bold text-neutral-900">Need Further Assistance?</h3>
-          <p className="text-xs text-neutral-500 font-medium leading-relaxed">
+          <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">Need Further Assistance?</h3>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 font-medium leading-relaxed">
             This project is a frontend e-commerce demonstration. For questions or portfolio inquiries, please use the contact option provided by the project owner.
           </p>
         </div>
@@ -98,13 +98,13 @@ export default function HelpPage() {
         <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/shop"
-            className="px-6 py-3 bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black transition-colors"
+            className="px-6 py-3 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black dark:hover:bg-white transition-colors"
           >
             Explore Fashion Store
           </Link>
           <Link
             to="/account"
-            className="px-6 py-3 bg-white border border-neutral-300 text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 transition-colors"
+            className="px-6 py-3 bg-white dark:bg-[#18181C] border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors"
           >
             Go to My Account
           </Link>

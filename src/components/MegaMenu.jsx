@@ -153,7 +153,7 @@ export default function MegaMenu({ activeTab, onClose }) {
 
   return (
     <div 
-      className="absolute top-full left-0 w-full bg-[#FAF9F5] border-b border-neutral-300/80 shadow-2xl z-50 pt-8 pb-10 px-8 transition-all duration-300 animate-in fade-in slide-in-from-top-2"
+      className="absolute top-full left-0 w-full bg-[#FAF9F5] dark:bg-[#141418] text-neutral-900 dark:text-neutral-100 border-b border-neutral-300/80 dark:border-neutral-800 shadow-2xl z-50 pt-8 pb-10 px-8 transition-all duration-300 animate-in fade-in slide-in-from-top-2"
       onMouseLeave={onClose}
     >
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-8 items-start">
@@ -162,7 +162,7 @@ export default function MegaMenu({ activeTab, onClose }) {
         <div className="col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
           {data.columns.map((col, idx) => (
             <div key={idx} className="space-y-4">
-              <h4 className="text-[10px] uppercase font-bold tracking-widest text-neutral-400">
+              <h4 className="text-[10px] uppercase font-bold tracking-widest text-neutral-400 dark:text-neutral-500">
                 {col.heading}
               </h4>
               <ul className="space-y-2.5">
@@ -171,7 +171,7 @@ export default function MegaMenu({ activeTab, onClose }) {
                     <Link
                       to={item.path}
                       onClick={onClose}
-                      className="text-xs font-medium text-neutral-800 hover:text-black hover:font-bold transition-all inline-flex items-center space-x-1 group"
+                      className="text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:text-black dark:hover:text-amber-300 hover:font-bold transition-all inline-flex items-center space-x-1 group"
                     >
                       <span>{item.label}</span>
                       <ArrowRight className="w-3 h-3 text-neutral-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />

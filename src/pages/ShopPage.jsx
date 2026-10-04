@@ -65,21 +65,21 @@ export default function ShopPage({
   const hasMore = visibleCount < filteredProducts.length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
       
       {/* Page Header */}
-      <div className="border-b border-neutral-200 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="border-b border-neutral-200 dark:border-neutral-800 pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-amber-900 block mb-1">VS SHOP CATALOGUE</span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-neutral-900">
+          <span className="text-xs font-bold uppercase tracking-widest text-amber-900 dark:text-amber-400 block mb-1">VS SHOP CATALOGUE</span>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-neutral-900 dark:text-neutral-100">
             Complete Fashion Collection
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-500 mt-2 max-w-xl font-medium">
+          <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-2 max-w-xl font-medium">
             Discover tailored silhouettes across Men, Women, Kids, and Accessories. Crafted from French flax linen, organic cotton, and Tuscan calfskin.
           </p>
         </div>
         <div className="text-right shrink-0">
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-500">
+          <span className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
             Showing {visibleProducts.length} of {filteredProducts.length} Objects
           </span>
         </div>
@@ -93,8 +93,8 @@ export default function ShopPage({
             onClick={() => handleFilterChange('department', dept.id)}
             className={`px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-xl transition-all whitespace-nowrap ${
               departmentParam === dept.id
-                ? 'bg-neutral-900 text-white shadow-xs'
-                : 'bg-white text-neutral-700 hover:bg-neutral-200/80 border border-neutral-200'
+                ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 shadow-xs'
+                : 'bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/80 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-800'
             }`}
           >
             {dept.name}
@@ -103,32 +103,32 @@ export default function ShopPage({
       </div>
 
       {/* Toolbar: Sort Selector & Mobile Filter Button */}
-      <div className="flex items-center justify-between gap-4 bg-neutral-100/80 p-4 rounded-2xl border border-neutral-200/80">
+      <div className="flex items-center justify-between gap-4 bg-neutral-100/80 dark:bg-neutral-900/80 p-4 rounded-2xl border border-neutral-200/80 dark:border-neutral-800">
         
         {/* Mobile Filter Drawer Trigger */}
         <button
           onClick={() => setIsMobileDrawerOpen(true)}
-          className="lg:hidden flex items-center space-x-2 px-4 py-2 bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-xs"
+          className="lg:hidden flex items-center space-x-2 px-4 py-2 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl shadow-xs"
         >
           <Filter className="w-3.5 h-3.5" />
           <span>Filter & Refine</span>
         </button>
 
         {/* Sort Selector Dropdown */}
-        <div className="flex items-center space-x-2 bg-white px-3.5 py-2 rounded-xl border border-neutral-200 text-xs ml-auto">
-          <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500" />
-          <span className="font-bold text-neutral-900 uppercase tracking-wider hidden sm:inline">Sort By:</span>
+        <div className="flex items-center space-x-2 bg-white dark:bg-neutral-900 px-3.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-700 text-xs ml-auto">
+          <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+          <span className="font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider hidden sm:inline">Sort By:</span>
           <select
             value={sortParam}
             onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-            className="bg-transparent font-semibold text-neutral-800 focus:outline-none cursor-pointer"
+            className="bg-transparent font-semibold text-neutral-800 dark:text-neutral-200 focus:outline-none cursor-pointer"
           >
-            <option value="recommended">Recommended</option>
-            <option value="newest">Newest Arrivals</option>
-            <option value="priceLow">Price: Low to High</option>
-            <option value="priceHigh">Price: High to Low</option>
-            <option value="discountHigh">Biggest Discount</option>
-            <option value="ratingHigh">Highest Customer Rating</option>
+            <option value="recommended" className="dark:bg-neutral-900">Recommended</option>
+            <option value="newest" className="dark:bg-neutral-900">Newest Arrivals</option>
+            <option value="priceLow" className="dark:bg-neutral-900">Price: Low to High</option>
+            <option value="priceHigh" className="dark:bg-neutral-900">Price: High to Low</option>
+            <option value="discountHigh" className="dark:bg-neutral-900">Biggest Discount</option>
+            <option value="ratingHigh" className="dark:bg-neutral-900">Highest Customer Rating</option>
           </select>
         </div>
 

@@ -1,16 +1,56 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-serif: 'Instrument Serif', Georgia, serif;
+    
+    /* Light Mode Multi-Surface System */
+    --bg-light-body: #FAF8F5;
+    --bg-light-surface: #FFFFFF;
+    --bg-light-elevated: #FCFAF7;
+    --bg-light-alt: #F4EFEA;
+    --bg-light-editorial: #EAE3D9;
+    --bg-light-footer: #191716;
+    --border-light: #E5DFD5;
+    --text-light-primary: #191716;
+    --text-light-secondary: #6E675E;
+
+    /* Dark Mode Multi-Layer Palette System */
+    --bg-dark-body: #121215;
+    --bg-dark-section: #18181D;
+    --bg-dark-alt: #1C1B20;
+    --bg-dark-card: #202027;
+    --bg-dark-elevated: #262630;
+    --bg-dark-modal: #24242C;
+    --bg-dark-drawer: #16161B;
+    --bg-dark-input: #191920;
+    --bg-dark-footer: #0B0B0E;
+    --border-dark: #2D2D38;
+    --text-dark-primary: #F5F2EB;
+    --text-dark-secondary: #A09D96;
+    
+    /* Accents */
+    --accent-champagne: #DFC17B;
+    --accent-gold: #E5C887;
+    --accent-bronze: #C29B63;
+    --accent-burgundy: #A83849;
+    --accent-success: #2E7D5C;
   }
   
   body {
     font-family: var(--font-sans);
-    background-color: #FAF9F5;
-    color: #121212;
+    background-color: var(--bg-light-body);
+    color: var(--text-light-primary);
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html.dark body {
+    background-color: var(--bg-dark-body);
+    color: var(--text-dark-primary);
   }
 }
 
@@ -28,21 +68,33 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF9F5;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #D4D0C8;
   border-radius: 3px;
 }
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3F3F46;
+  border-radius: 3px;
+}
 ::-webkit-scrollbar-thumb:hover {
   background: #A39E93;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #52525B;
 }
 
 /* Custom backdrop blur header styling */
 .glass-header {
-  background-color: rgba(250, 249, 245, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(250, 248, 245, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+html.dark .glass-header {
+  background-color: rgba(18, 18, 21, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 /* Smooth zoom for images */
@@ -50,5 +102,63 @@
   transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .group:hover .img-zoom {
-  transform: scale(1.05);
+  transform: scale(1.06);
+}
+
+/* Ticket cutout notches for premium coupons */
+.coupon-ticket {
+  position: relative;
+}
+.coupon-ticket::before,
+.coupon-ticket::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: var(--bg-light-body);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+html.dark .coupon-ticket::before,
+html.dark .coupon-ticket::after {
+  background-color: var(--bg-dark-body);
+}
+.coupon-ticket::before {
+  left: -10px;
+}
+.coupon-ticket::after {
+  right: -10px;
+}
+
+/* Shimmer animation for promotional elements */
+@keyframes couponShine {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(200%) rotate(25deg); }
+}
+
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+.shine-effect::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 70%
+  );
+  transform: rotate(25deg);
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+.shine-effect:hover::after {
+  animation: couponShine 1.2s ease forwards;
 }

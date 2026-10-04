@@ -114,7 +114,7 @@ export default function DepartmentPage({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Subcategory Navigation Pills */}
-        <div className="flex items-center justify-between gap-4 border-b border-neutral-200 pb-4">
+        <div className="flex items-center justify-between gap-4 border-b border-neutral-200 dark:border-neutral-800 pb-4">
           <div className="flex items-center space-x-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
             {deptSubcategories.map((subcat) => (
               <button
@@ -122,8 +122,8 @@ export default function DepartmentPage({
                 onClick={() => handleFilterChange('category', subcat)}
                 className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all whitespace-nowrap ${
                   categoryParam.toLowerCase() === subcat.toLowerCase()
-                    ? 'bg-neutral-900 text-white shadow-xs'
-                    : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-200/80'
+                    ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 shadow-xs'
+                    : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200/80 dark:border-neutral-700'
                 }`}
               >
                 {subcat === 'all' ? `All ${deptMeta.name}` : subcat}
@@ -132,19 +132,19 @@ export default function DepartmentPage({
           </div>
 
           {/* Sort Selector */}
-          <div className="flex items-center space-x-2 bg-white px-3 py-2 rounded-xl border border-neutral-200 text-xs shrink-0 self-start sm:self-auto">
-            <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500" />
+          <div className="flex items-center space-x-2 bg-white dark:bg-[#18181C] px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 text-xs shrink-0 self-start sm:self-auto">
+            <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
             <select
               value={sortParam}
               onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-              className="bg-transparent font-medium text-neutral-800 focus:outline-none cursor-pointer"
+              className="bg-transparent font-medium text-neutral-800 dark:text-neutral-200 focus:outline-none cursor-pointer"
             >
-              <option value="recommended">Recommended</option>
-              <option value="newest">Newest Arrivals</option>
-              <option value="priceLow">Price: Low to High</option>
-              <option value="priceHigh">Price: High to Low</option>
-              <option value="discountHigh">Biggest Discount</option>
-              <option value="ratingHigh">Highest Customer Rating</option>
+              <option value="recommended" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Recommended</option>
+              <option value="newest" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Newest Arrivals</option>
+              <option value="priceLow" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Price: Low to High</option>
+              <option value="priceHigh" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Price: High to Low</option>
+              <option value="discountHigh" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Biggest Discount</option>
+              <option value="ratingHigh" className="bg-white dark:bg-[#18181C] text-neutral-900 dark:text-neutral-100">Highest Customer Rating</option>
             </select>
           </div>
         </div>
@@ -153,13 +153,13 @@ export default function DepartmentPage({
         <div className="lg:hidden flex items-center justify-between">
           <button
             onClick={() => setIsMobileDrawerOpen(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-xs"
+            className="flex items-center space-x-2 px-4 py-2 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl shadow-xs"
           >
             <Filter className="w-3.5 h-3.5" />
             <span>Filter {deptMeta.name}</span>
           </button>
 
-          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
+          <span className="text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400">
             {filteredProducts.length} Objects Found
           </span>
         </div>
@@ -181,17 +181,17 @@ export default function DepartmentPage({
           {/* Product Grid */}
           <div className="flex-1 space-y-8">
             {filteredProducts.length === 0 ? (
-              <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-neutral-300 p-8 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-neutral-100 flex items-center justify-center mx-auto text-neutral-400">
+              <div className="text-center py-20 bg-white dark:bg-[#18181C] rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 p-8 space-y-4">
+                <div className="w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto text-neutral-400 dark:text-neutral-500">
                   <Filter className="w-8 h-8 stroke-[1.5]" />
                 </div>
-                <h2 className="text-lg font-bold text-neutral-900">NO OBJECTS MATCH THESE FILTERS</h2>
-                <p className="text-xs text-neutral-500 max-w-sm mx-auto">
+                <h2 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">NO OBJECTS MATCH THESE FILTERS</h2>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 max-w-sm mx-auto">
                   Try adjusting your filter options to view available objects in {deptMeta.name}.
                 </p>
                 <button
                   onClick={handleResetFilters}
-                  className="mt-2 inline-flex items-center space-x-2 px-6 py-3 bg-neutral-900 text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black transition-colors"
+                  className="mt-2 inline-flex items-center space-x-2 px-6 py-3 bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 text-xs font-bold uppercase tracking-wider rounded-xl hover:bg-black dark:hover:bg-white transition-colors"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Clear Department Filters</span>
@@ -217,7 +217,7 @@ export default function DepartmentPage({
                   <div className="text-center pt-8">
                     <button
                       onClick={() => setVisibleCount(prev => prev + 12)}
-                      className="px-8 py-3.5 bg-white border border-neutral-900 text-neutral-900 text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-900 hover:text-white transition-all shadow-xs"
+                      className="px-8 py-3.5 bg-white dark:bg-[#18181C] border border-neutral-900 dark:border-neutral-100 text-neutral-900 dark:text-neutral-100 text-xs font-bold uppercase tracking-widest rounded-xl hover:bg-neutral-900 dark:hover:bg-white hover:text-white dark:hover:text-neutral-900 transition-all shadow-xs"
                     >
                       Load More Objects ({filteredProducts.length - visibleCount} remaining)
                     </button>
